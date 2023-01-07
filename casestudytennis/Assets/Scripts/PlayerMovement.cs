@@ -1,4 +1,4 @@
-using System;
+
 using UnityEngine;
 
 
@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
     private float _horizontalInput,_verticalInput;
     private Rigidbody _rigidBody;
     private Transform _thisTransform;
-    public bool _isGrounded;
+    private bool _isGrounded;
 
     private void Awake()
     {
@@ -35,7 +35,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void CheckGround()
     {
-        if(Physics.Raycast(_thisTransform.position,Vector3.down,1f))
+        if(Physics.Raycast(_thisTransform.position,Vector3.down,1f,3))
         {
             _isGrounded = true;
         }
