@@ -17,9 +17,7 @@ public class PlayerMovement : MonoBehaviour
     {
         _rigidBody = GetComponent<Rigidbody>();
         _thisTransform = GetComponent<Transform>();
-
     }
-
     private void FixedUpdate()
     {
         CheckGround();
@@ -32,10 +30,9 @@ public class PlayerMovement : MonoBehaviour
             Jump();
         }
     }
-
     private void CheckGround()
     {
-        if(Physics.Raycast(_thisTransform.position,Vector3.down,1f,3))
+        if(Physics.Raycast(_thisTransform.position,Vector3.down,1.5f))
         {
             _isGrounded = true;
         }
@@ -53,8 +50,6 @@ public class PlayerMovement : MonoBehaviour
             _rigidBody.AddForce(Vector3.up*jumpPower,ForceMode.Impulse);
         }
     }
-    
-    
     
     private void JoystickMovement()
     {

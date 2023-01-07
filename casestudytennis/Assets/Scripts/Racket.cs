@@ -1,4 +1,5 @@
 
+using System;
 using DG.Tweening;
 using UnityEngine;
 
@@ -21,8 +22,13 @@ public class Racket : MonoBehaviour
         RacketHitAreaBase.IncomingBallPositionBroadcast -= MoveRacketToPosition;
     }
 
-    private void MoveRacketToPosition(Vector3 desiresPos)
+    private void MoveRacketToPosition(Vector3 desiresPos,Racket racket)
     {
-        transform.DOMove(new Vector3(_thisPos.x, _thisPos.y, desiresPos.z), 0.3f).SetEase(Ease.InSine);
+        if (racket == this)
+        {
+            transform.DOMove(new Vector3(_thisPos.x, desiresPos.y, desiresPos.z), 0.1f).SetEase(Ease.InSine)
+                .OnComplete((() => transform.DOShakeScale(0.3f, 1f)));
+            transform.DOShakeRotation(0.2f);
+        }
     }
 }

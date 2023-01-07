@@ -7,7 +7,7 @@ public class Laser : MonoBehaviour
     {
         if (other.TryGetComponent<PlayerMovement>(out var player))
         {
-            Debug.Log("player detected");
+            LevelManager.Instance.GameOver();
         }
     }
     
