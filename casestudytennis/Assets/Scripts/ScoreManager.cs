@@ -43,19 +43,6 @@ public class ScoreManager : Singleton<ScoreManager>
         StartCoroutine(IncrementScoreRoutine());
     }
 
-    // public void IncrementScore()
-    // {
-    //     HighScorePlus();
-    //     CoinScorePlus(1);
-    //     var coinPos = _camera.WorldToScreenPoint(ballTransform.position);
-    //     var newCoin=CoinSpritePool.Instance.GetPooledSprite();
-    //     newCoin.SetActive(true);
-    //     newCoin.transform.position = coinPos;
-    //     newCoin.transform.DOMove(uICoinSpritePos.position, 1.5f).SetEase(Ease.InQuart)
-    //         .OnComplete(ShakeScaleOfSprite(uICoinSpritePos))
-    //         .OnComplete(delegate { DisableSprite(newCoin); });
-    // }
-
     private TweenCallback ShakeScaleOfSprite(Transform obj)
     {
         obj.DORewind();
