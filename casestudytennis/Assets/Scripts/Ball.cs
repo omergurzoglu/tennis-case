@@ -13,10 +13,10 @@ public class Ball : MonoBehaviour
 
     private void Start()
     {
-        BallResonance();
+        BallInitialVelocity();
     }
 
-    private void BallResonance()
+    private void BallInitialVelocity()
     {
         _ballRigidbody.velocity = new Vector3(-15, 5, 0);
 

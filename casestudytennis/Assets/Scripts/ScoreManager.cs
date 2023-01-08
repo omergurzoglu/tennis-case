@@ -1,6 +1,5 @@
 
 using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -29,8 +28,11 @@ public class ScoreManager : Singleton<ScoreManager>
         var coinPos = _camera.WorldToScreenPoint(ballTransform.position);
         var newCoin=CoinSpritePool.Instance.GetPooledSprite();
         newCoin.SetActive(true);
-        newCoin.transform.position = coinPos;
-        newCoin.transform.DOMove(uICoinSpritePos.position, 1.5f).SetEase(Ease.InQuart);
+        if (newCoin!=null)
+        {
+            newCoin.transform.position = coinPos;
+            newCoin.transform.DOMove(uICoinSpritePos.position, 1.5f).SetEase(Ease.InQuart);
+        }
         yield return new WaitForSeconds(1.5f);
         HighScorePlus();
         CoinScorePlus(1);
