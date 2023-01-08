@@ -16,12 +16,12 @@ public abstract class RacketHitAreaBase : MonoBehaviour,IHitBall
 
     private void OnDisable() => LevelManager.IncreaseDifficulty -= DifficultyCoroutine;
 
-    private void DifficultyCoroutine(float time) => StartCoroutine(IncreaseDifficultyAfterTime(time));
+    private void DifficultyCoroutine(float time,float force) => StartCoroutine(IncreaseDifficultyAfterTime(time,force));
 
-    private IEnumerator IncreaseDifficultyAfterTime(float time)
+    private IEnumerator IncreaseDifficultyAfterTime(float time,float force )
     {
         yield return new WaitForSecondsRealtime(time);
-        _racketHitForce += .25f;
+        _racketHitForce += force;
     }
     public void OnCollisionEnter(Collision collision)
     {

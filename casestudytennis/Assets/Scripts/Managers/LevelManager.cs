@@ -9,9 +9,10 @@ public class LevelManager : Singleton<LevelManager>
 {
     [SerializeField] private Transform gameOverPanel;
     [SerializeField] private Transform startPanel;
-    [SerializeField] public float increaseDifficultyAfterTime;
+    [SerializeField] private float increaseDifficultyAfterTime;
+    [SerializeField] private float difficultyForce;
     
-    public static event Action<float> IncreaseDifficulty;
+    public static event Action<float,float> IncreaseDifficulty;
 
     private void Awake()
     {
@@ -24,7 +25,7 @@ public class LevelManager : Singleton<LevelManager>
     {
         startPanel.gameObject.SetActive(false);
         Time.timeScale = 1;
-        OnIncreaseDifficulty(increaseDifficultyAfterTime);
+        OnIncreaseDifficulty(increaseDifficultyAfterTime,difficultyForce);
     }
 
     public void GameOver() => StartCoroutine(GameOverCoroutine());
@@ -57,5 +58,5 @@ public class LevelManager : Singleton<LevelManager>
         Time.timeScale = 0;
     }
     
-    private void OnIncreaseDifficulty(float time) => IncreaseDifficulty?.Invoke(time);
+    private void OnIncreaseDifficulty(float time,float force) => IncreaseDifficulty?.Invoke(time,force);
 }
