@@ -25,15 +25,16 @@ public class ScoreManager : Singleton<ScoreManager>
 
     private IEnumerator IncrementScoreRoutine()
     {
-        var coinPos = _camera.WorldToScreenPoint(ballTransform.position);
-        var newCoin=CoinSpritePool.Instance.GetPooledSprite();
+        Vector3 coinPos = _camera.WorldToScreenPoint(ballTransform.position);
+        GameObject newCoin=CoinSpritePool.Instance.GetPooledSprite();
+        
         newCoin.SetActive(true);
-        if (newCoin!=null)
-        {
-            newCoin.transform.position = coinPos;
-            newCoin.transform.DOMove(uICoinSpritePos.position, 1.5f).SetEase(Ease.InQuart);
-        }
+        newCoin.transform.position = coinPos;
+        ShakeScaleOfSprite(newCoin.transform);
+        newCoin.transform.DOMove(uICoinSpritePos.position, 1.5f).SetEase(Ease.InQuart);
+        
         yield return new WaitForSeconds(1.5f);
+        
         HighScorePlus();
         CoinScorePlus(1);
         ShakeScaleOfSprite(uICoinSpritePos);

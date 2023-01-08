@@ -8,7 +8,7 @@ public class Laser : MonoBehaviour
     {
         if (other.TryGetComponent<PlayerMovement>(out var player))
         {
-            player.transform.DOPunchScale(new Vector3(2f,2f,2f), 0.4f);
+            player.transform.DOShakeScale(0.3f);
             LevelManager.Instance.GameOver();
         }
     }

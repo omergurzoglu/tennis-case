@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ public class CoinSpritePool : Singleton<CoinSpritePool>
     [SerializeField] private GameObject coinSpritePrefab;
     [SerializeField] private Canvas canvas;
     
+
     private void Start()
     {
         for (var i = 0; i < SpriteAmount; i++)
@@ -15,6 +17,7 @@ public class CoinSpritePool : Singleton<CoinSpritePool>
             var obj = Instantiate(coinSpritePrefab,canvas.transform);
             obj.SetActive(false);
             _moneySprite.Add(obj);
+           
         }
     }
     public GameObject GetPooledSprite()
