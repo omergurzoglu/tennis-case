@@ -1,5 +1,8 @@
 
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 
 public class PlayerMovement : MonoBehaviour
@@ -12,22 +15,59 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody _rigidBody;
     private Transform _thisTransform;
     private bool _isGrounded;
+    private float _holdTimer = 0f;
+    private const float TapAndHoldThreshold = 0.1f;
 
     private void Awake()
     {
         _rigidBody = GetComponent<Rigidbody>();
         _thisTransform = GetComponent<Transform>();
     }
-    private void FixedUpdate()
+    private void Update()
     {
-        CheckGround();
-        if (Input.GetMouseButton(0))
+         CheckGround();
+         if (!LevelManager.Instance.IsGamePaused())
+         {
+             MovementFunction();
+         }
+         
+    }
+
+    private void MovementFunction()
+    {
+        
+
+        if (Input.touchCount > 0)
         {
-            JoystickMovement();
-        }
-        if(Input.GetKey(KeyCode.Space))
-        {
-            Jump();
+            Touch touch = Input.GetTouch(0);
+            
+            switch (touch.phase)
+            {
+                case TouchPhase.Began:
+                    _holdTimer = 0f;
+                    break;
+                case TouchPhase.Moved or TouchPhase.Stationary:
+                {
+                    _holdTimer += Time.deltaTime;
+
+                    if (_holdTimer > TapAndHoldThreshold)
+                    {
+                        JoystickMovement();
+                    }
+
+                    break;
+                }
+                case TouchPhase.Ended:
+                {
+                    if (_holdTimer < TapAndHoldThreshold)
+                    {
+                        Jump();
+                    }
+
+                    break;
+                }
+                
+            }
         }
     }
     private void CheckGround()
@@ -39,7 +79,7 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             _isGrounded = false;
-            _rigidBody.AddForce(Vector3.down*3f,ForceMode.Impulse);
+            _rigidBody.AddForce(Vector3.down * 4f ,ForceMode.Impulse);
         }
     }
 
@@ -47,7 +87,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (_isGrounded)
         {
-            _rigidBody.AddForce(Vector3.up*jumpPower,ForceMode.Impulse);
+            _rigidBody.AddForce(Vector3.up * jumpPower ,ForceMode.Impulse);
         }
     }
     

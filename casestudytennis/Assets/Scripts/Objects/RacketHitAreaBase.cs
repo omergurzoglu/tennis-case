@@ -10,7 +10,7 @@ public abstract class RacketHitAreaBase : MonoBehaviour,IHitBall
     protected Transform TargetAnchor;
     protected Racket Racket;
     public static event Action<Vector3,Racket> IncomingBallPositionBroadcast;
-    private float _racketHitForce=1.5f;
+    private float _racketHitForce=1f;
 
     private void Start() => LevelManager.IncreaseDifficulty += DifficultyCoroutine;
 

@@ -13,20 +13,19 @@ public class LevelManager : Singleton<LevelManager>
     [SerializeField] private float difficultyForce;
     
     public static event Action<float,float> IncreaseDifficulty;
-
+    private bool _gamePaused;
+    
     private void Awake()
     {
+        _gamePaused = true;
         Time.timeScale = 0;
         startPanel.gameObject.SetActive(true);
         gameOverPanel.gameObject.SetActive(false);
     }
-    
-    public void TapToStart()
-    {
-        startPanel.gameObject.SetActive(false);
-        Time.timeScale = 1;
-        OnIncreaseDifficulty(increaseDifficultyAfterTime,difficultyForce);
-    }
+
+    public bool IsGamePaused() => _gamePaused;
+
+    public void TapToStart() => StartCoroutine(StartDelay());
 
     public void GameOver() => StartCoroutine(GameOverCoroutine());
 
@@ -56,6 +55,15 @@ public class LevelManager : Singleton<LevelManager>
             yield return new WaitForSeconds(0.05f);
         }
         Time.timeScale = 0;
+    }
+
+    private IEnumerator StartDelay()
+    {
+        startPanel.gameObject.SetActive(false);
+        yield return new WaitForSecondsRealtime(0.4f);
+        _gamePaused = false;
+        Time.timeScale = 1;
+        OnIncreaseDifficulty(increaseDifficultyAfterTime,difficultyForce);
     }
     
     private void OnIncreaseDifficulty(float time,float force) => IncreaseDifficulty?.Invoke(time,force);
